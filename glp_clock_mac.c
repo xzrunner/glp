@@ -31,7 +31,7 @@ glp_clock_start(struct glp_clock* clk) {
 	clk->last = clk->start;
 }
 
-double 
+uint32_t 
 glp_clock_get_time(struct glp_clock* clk) {
 	uint64_t tmp;
 	tmp = mach_absolute_time();
@@ -39,7 +39,7 @@ glp_clock_get_time(struct glp_clock* clk) {
 	return time;
 }
 
-double 
+uint32_t 
 glp_clock_get_during(struct glp_clock* clk, bool reset) {
 	uint64_t tmp;
 	tmp = mach_absolute_time();
