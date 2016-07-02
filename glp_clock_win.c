@@ -5,7 +5,6 @@
 struct glp_clock {
 	LARGE_INTEGER freq;
 	LARGE_INTEGER start, last;
-	LARGE_INTEGER tmp;
 };
 
 struct glp_clock* 
@@ -27,19 +26,21 @@ glp_clock_start(struct glp_clock* clk) {
 	clk->last = clk->start;
 }
 
-double 
+uint32_t 
 glp_clock_get_time(struct glp_clock* clk) {
-	QueryPerformanceCounter(&clk->tmp);
-	double time = (double)((clk->tmp.QuadPart - clk->start.QuadPart) * 1000 / clk->freq.QuadPart);
+	LARGE_INTEGER tmp;
+	QueryPerformanceCounter(&tmp);
+	uint32_t time = (uint32_t)((tmp.QuadPart - clk->start.QuadPart) * 1000 / clk->freq.QuadPart);
 	return time;
 }
 
-double 
+uint32_t 
 glp_clock_get_during(struct glp_clock* clk, bool reset) {
-	QueryPerformanceCounter(&clk->tmp);
-	double during = (double)((clk->tmp.QuadPart - clk->last.QuadPart) * 1000 / clk->freq.QuadPart);
+	LARGE_INTEGER tmp;
+	QueryPerformanceCounter(&tmp);
+	uint32_t during = (uint32_t)((tmp.QuadPart - clk->last.QuadPart) * 1000 / clk->freq.QuadPart);
 	if (reset) {
-		clk->last = clk->tmp;
+		clk->last = tmp;
 	}
 	return during;
 }

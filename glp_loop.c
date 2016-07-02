@@ -42,7 +42,7 @@ void
 glp_loop_update() {
 	UPDATE_FUNC(UPDATE_FUNC_UD);
 
-	float tpf_last = glp_clock_get_during(S.clk, false);
+	uint32_t tpf_last = glp_clock_get_during(S.clk, false);
 	S.tpf_real = (S.tpf_real * FPS_SMOOTHING) + tpf_last * (1.0f - FPS_SMOOTHING);
 	
 	if (S.sleep_time > 0) {
@@ -52,7 +52,7 @@ glp_loop_update() {
 #endif // _WIN32
 	}
 
-	float cost = glp_clock_get_during(S.clk, true);
+	uint32_t cost = glp_clock_get_during(S.clk, true);
 	S.sleep_time += (S.tpf_game - cost);
 }
 
