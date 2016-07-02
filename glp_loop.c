@@ -4,10 +4,11 @@
 #include <stdio.h>
 
 #ifdef _WIN32
-#include <Windows.h>
+	#include <Windows.h>
+	#include <gl/gl.h>
 #elif defined(__MACOSX)
-#include <unistd.h>
-#endif // _WIN32
+	#include <unistd.h>
+#endif
 
 struct loop_state {
 	struct glp_clock* clk;
@@ -25,8 +26,28 @@ static void* UPDATE_FUNC_UD;
 
 #define FPS_SMOOTHING 0.9f
 
+#ifdef _WIN32
+void close_vsync() {
+	typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALPROC)(int);
+	PFNWGLSWAPINTERVALPROC wglSwapIntervalEXT = 0;
+	const char* extensions = (char*)glGetString(GL_EXTENSIONS);
+	if(strstr(extensions, "WGL_EXT_swap_control") == 0) {
+		return;
+	} else {
+		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALPROC)wglGetProcAddress("wglSwapIntervalEXT");
+		if(wglSwapIntervalEXT) {
+			wglSwapIntervalEXT(0);
+		}
+	}
+}
+#else
+void close_vsync() {}
+#endif // _WIN32
+
 void 
 glp_loop_init(int fps, void (*update)(void*), void* ud) {
+	close_vsync();
+
 	UPDATE_FUNC = update;
 	UPDATE_FUNC_UD = ud;
 
