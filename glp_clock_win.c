@@ -1,6 +1,6 @@
 #include "glp_clock.h"
 
-#include <Windows.h>
+#include <windows.h>
 
 struct glp_clock {
 	LARGE_INTEGER freq;

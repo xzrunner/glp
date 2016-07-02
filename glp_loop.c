@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 #ifdef _WIN32
-	#include <Windows.h>
-	#include <gl/gl.h>
+	#include <windows.h>
+	#include <GL/gl.h>
 #elif defined(__MACOSX)
 	#include <unistd.h>
 #endif
