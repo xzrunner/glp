@@ -5,6 +5,8 @@
 
 #ifdef _WIN32
 #include <Windows.h>
+#elif defined(__MACOSX)
+#include <unistd.h>
 #endif // _WIN32
 
 struct loop_state {
@@ -49,7 +51,9 @@ glp_loop_update() {
 //		printf("sleep %f \n", S.sleep_time);
 #ifdef _WIN32
 		Sleep(S.sleep_time);
-#endif // _WIN32
+#elif defined(__MACOSX)
+		usleep(1000 * S.sleep_time);
+#endif
 	}
 
 	uint32_t cost = glp_clock_get_during(S.clk, true);
