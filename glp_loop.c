@@ -9,7 +9,7 @@
 
 struct loop_state {
 	struct glp_clock* clk;
-	float sleep_time;
+	uint32_t sleep_time;
 
 	int fps_game;
 	// time per frame
