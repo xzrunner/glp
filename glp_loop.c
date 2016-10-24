@@ -24,7 +24,7 @@ static struct loop_state S;
 static void (*UPDATE_FUNC)();
 static void* UPDATE_FUNC_UD;
 
-#define FPS_SMOOTHING 0.9f
+#define FPS_SMOOTHING 0.99f
 
 #ifdef _WIN32
 void close_vsync() {
