@@ -6,7 +6,7 @@
 #ifdef _WIN32
 	#include <windows.h>
 	#include <GL/gl.h>
-#elif defined(__MACOSX)
+#else
 	#include <unistd.h>
 #endif
 
@@ -69,10 +69,10 @@ glp_loop_update() {
 	S.tpf_real = (S.tpf_real * FPS_SMOOTHING) + tpf_last * (1.0f - FPS_SMOOTHING);
 	
 	if (S.sleep_time > 0) {
-//		printf("sleep %f \n", S.sleep_time);
+		//printf("sleep %f \n", S.sleep_time);
 #ifdef _WIN32
 		Sleep(S.sleep_time);
-#elif defined(__MACOSX)
+#else
 		usleep(1000 * S.sleep_time);
 #endif
 	}
