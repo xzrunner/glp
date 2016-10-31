@@ -6,7 +6,7 @@ extern "C"
 #ifndef game_loop_loop_h
 #define game_loop_loop_h
 
-void glp_loop_init(int fps, void (*update)(void*), void* ud);
+void glp_loop_init(int fps);
 void glp_loop_update();
 
 int glp_loop_get_fps();

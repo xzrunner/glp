@@ -21,9 +21,6 @@ struct loop_state {
 
 static struct loop_state S;
 
-static void (*UPDATE_FUNC)();
-static void* UPDATE_FUNC_UD;
-
 #define FPS_SMOOTHING 0.99f
 
 #ifdef _WIN32
@@ -45,11 +42,8 @@ void close_vsync() {}
 #endif // _WIN32
 
 void 
-glp_loop_init(int fps, void (*update)(void*), void* ud) {
+glp_loop_init(int fps) {
 	close_vsync();
-
-	UPDATE_FUNC = update;
-	UPDATE_FUNC_UD = ud;
 
 	S.clk = glp_clock_create();
 	glp_clock_start(S.clk);
@@ -63,8 +57,6 @@ glp_loop_init(int fps, void (*update)(void*), void* ud) {
 
 void 
 glp_loop_update() {
-	UPDATE_FUNC(UPDATE_FUNC_UD);
-
 	uint32_t tpf_last = glp_clock_get_during(S.clk, false);
 	S.tpf_real = (S.tpf_real * FPS_SMOOTHING) + tpf_last * (1.0f - FPS_SMOOTHING);
 	
