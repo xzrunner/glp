@@ -57,6 +57,10 @@ glp_loop_init(int fps) {
 
 void 
 glp_loop_update() {
+	if (!S.clk) {
+		return;
+	}
+
 	uint32_t tpf_last = glp_clock_get_during(S.clk, false);
 	S.tpf_real = (S.tpf_real * FPS_SMOOTHING) + tpf_last * (1.0f - FPS_SMOOTHING);
 	
