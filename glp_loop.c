@@ -21,7 +21,7 @@ struct loop_state {
 
 static struct loop_state S;
 
-#define FPS_SMOOTHING 0.9f
+#define FPS_SMOOTHING 0.99f
 
 #ifdef _WIN32
 void close_vsync() {
