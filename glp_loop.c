@@ -55,13 +55,18 @@ glp_loop_init(int fps) {
 	S.tpf_real = 0;
 }
 
+static uint32_t
+_fix_during(uint32_t during) {
+	return during > 1000 ? 30 : during;
+}
+
 void 
 glp_loop_update() {
 	if (!S.clk) {
 		return;
 	}
 
-	uint32_t tpf_last = glp_clock_get_during(S.clk, false);
+	uint32_t tpf_last = _fix_during(glp_clock_get_during(S.clk, false));
 	S.tpf_real = (S.tpf_real * FPS_SMOOTHING) + tpf_last * (1.0f - FPS_SMOOTHING);
 	
 	if (S.sleep_time > 0) {
@@ -73,7 +78,7 @@ glp_loop_update() {
 #endif
 	}
 
-	uint32_t cost = glp_clock_get_during(S.clk, true);
+	uint32_t cost = _fix_during(glp_clock_get_during(S.clk, true));
 	S.sleep_time += (S.tpf_game - cost);
 }
 
