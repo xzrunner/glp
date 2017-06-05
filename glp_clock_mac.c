@@ -6,7 +6,7 @@
 #include <string.h>
 
 static const int64_t ONE_THOUSAND = 1000;
-static const int64_t ONE_MILLION = ONE_THOUSAND * ONE_THOUSAND;
+static const int64_t ONE_MILLION = 1000 * 1000;
 
 struct glp_clock {
 	mach_timebase_info_data_t timebase_info;

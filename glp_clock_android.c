@@ -15,7 +15,7 @@ glp_clock_create() {
 }
 
 static const int64_t ONE_THOUSAND = 1000;
-static const int64_t ONE_MILLION = ONE_THOUSAND * ONE_THOUSAND;
+static const int64_t ONE_MILLION = 1000 * 1000;
 
 void 
 glp_clock_release(struct glp_clock* clk) {
