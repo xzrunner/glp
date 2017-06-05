@@ -7,6 +7,9 @@ struct glp_clock {
 	LARGE_INTEGER start, last;
 };
 
+static const int64_t ONE_THOUSAND = 1000;
+static const int64_t ONE_MILLION = ONE_THOUSAND * ONE_THOUSAND;
+
 struct glp_clock* 
 glp_clock_create() {
 	struct glp_clock* clk = (struct glp_clock*)malloc(sizeof(*clk));
@@ -30,7 +33,7 @@ uint32_t
 glp_clock_get_time(struct glp_clock* clk) {
 	LARGE_INTEGER tmp;
 	QueryPerformanceCounter(&tmp);
-	uint32_t time = (uint32_t)((tmp.QuadPart - clk->start.QuadPart) * 1000 / clk->freq.QuadPart);
+	uint32_t time = (uint32_t)((tmp.QuadPart - clk->start.QuadPart) * ONE_MILLION / clk->freq.QuadPart);
 	return time;
 }
 
@@ -38,7 +41,7 @@ uint32_t
 glp_clock_get_during(struct glp_clock* clk, bool reset) {
 	LARGE_INTEGER tmp;
 	QueryPerformanceCounter(&tmp);
-	uint32_t during = (uint32_t)((tmp.QuadPart - clk->last.QuadPart) * 1000 / clk->freq.QuadPart);
+	uint32_t during = (uint32_t)((tmp.QuadPart - clk->last.QuadPart) * ONE_MILLION / clk->freq.QuadPart);
 	if (reset) {
 		clk->last = tmp;
 	}

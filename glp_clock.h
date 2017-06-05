@@ -16,7 +16,7 @@ void glp_clock_release(struct glp_clock*);
 
 void glp_clock_start(struct glp_clock*);
 
-// return in millisecond
+// return in microseconds
 uint32_t glp_clock_get_time(struct glp_clock*);
 uint32_t glp_clock_get_during(struct glp_clock*, bool reset);
 

@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const int64_t ONE_MILLION = 1000 * 1000;
+static const int64_t ONE_THOUSAND = 1000;
+static const int64_t ONE_MILLION = ONE_THOUSAND * ONE_THOUSAND;
 
 struct glp_clock {
 	mach_timebase_info_data_t timebase_info;
@@ -35,7 +36,7 @@ uint32_t
 glp_clock_get_time(struct glp_clock* clk) {
 	uint64_t tmp;
 	tmp = mach_absolute_time();
-	uint32_t time = (uint32_t)(((tmp - clk->start) * clk->timebase_info.numer) / (ONE_MILLION * clk->timebase_info.denom));
+	uint32_t time = (uint32_t)(((tmp - clk->start) * clk->timebase_info.numer) / (ONE_THOUSAND * clk->timebase_info.denom));
 	return time;
 }
 
@@ -43,7 +44,7 @@ uint32_t
 glp_clock_get_during(struct glp_clock* clk, bool reset) {
 	uint64_t tmp;
 	tmp = mach_absolute_time();
-	uint32_t during = (uint32_t)(((tmp - clk->last) * clk->timebase_info.numer) / (ONE_MILLION * clk->timebase_info.denom));
+	uint32_t during = (uint32_t)(((tmp - clk->last) * clk->timebase_info.numer) / (ONE_THOUSAND * clk->timebase_info.denom));
 	if (reset) {
 		clk->last = tmp;
 	}	

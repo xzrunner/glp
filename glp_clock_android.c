@@ -14,6 +14,9 @@ glp_clock_create() {
 	return clk;
 }
 
+static const int64_t ONE_THOUSAND = 1000;
+static const int64_t ONE_MILLION = ONE_THOUSAND * ONE_THOUSAND;
+
 void 
 glp_clock_release(struct glp_clock* clk) {
 	free(clk);
@@ -22,7 +25,7 @@ glp_clock_release(struct glp_clock* clk) {
 static uint64_t
 _get_absolute_time(struct glp_clock* clk) {
 	clock_gettime(CLOCK_REALTIME, &clk->res);
-	return 1000.0 * clk->res.tv_sec + (double) clk->res.tv_nsec / 1e6;
+	return ONE_MILLION * clk->res.tv_sec + (double) clk->res.tv_nsec / ONE_THOUSAND;
 }
 
 void 

@@ -57,7 +57,8 @@ glp_loop_init(int fps) {
 
 static uint32_t
 _fix_during(uint32_t during) {
-	return during > 1000 ? 30 : during;
+	uint32_t milliseconds = (uint32_t)(during / 1000);
+	return milliseconds > 1000 ? 30 : milliseconds;
 }
 
 void 
@@ -94,4 +95,9 @@ glp_print_fps() {
 		printf("\r[fps %d]    ", glp_loop_get_fps());
 		count = 0;
 	}
+}
+
+uint32_t 
+glp_get_time() {
+	return glp_clock_get_time(S.clk);
 }
