@@ -11,8 +11,7 @@ extern "C"
 void glp_loop_init(int fps);
 void glp_loop_update();
 
-int glp_loop_get_fps();
-void glp_print_fps();
+float glp_get_dt();
 
 // return in microseconds
 uint32_t glp_get_time();

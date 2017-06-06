@@ -21,14 +21,12 @@ struct loop_state {
 
 static struct loop_state S;
 
-#define FPS_SMOOTHING 0.99f
-
 #ifdef _WIN32
 void close_vsync() {
 	typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALPROC)(int);
 	PFNWGLSWAPINTERVALPROC wglSwapIntervalEXT = 0;
 	const char* extensions = (char*)glGetString(GL_EXTENSIONS);
-	if(strstr(extensions, "WGL_EXT_swap_control") == 0) {
+	if (strstr(extensions, "WGL_EXT_swap_control") == 0) {
 		return;
 	} else {
 		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALPROC)wglGetProcAddress("wglSwapIntervalEXT");
@@ -67,11 +65,9 @@ glp_loop_update() {
 		return;
 	}
 
-	uint32_t tpf_last = _fix_during(glp_clock_get_during(S.clk, false));
-	S.tpf_real = (S.tpf_real * FPS_SMOOTHING) + tpf_last * (1.0f - FPS_SMOOTHING);
+	S.tpf_real = _fix_during(glp_clock_get_during(S.clk, false));
 	
 	if (S.sleep_time > 0) {
-		//printf("sleep %f \n", S.sleep_time);
 #ifdef _WIN32
 		Sleep(S.sleep_time);
 #else
@@ -83,18 +79,9 @@ glp_loop_update() {
 	S.sleep_time += (S.tpf_game - cost);
 }
 
-int 
-glp_loop_get_fps() {
-	return (int)(1000.0f / S.tpf_real + 0.5f);
-}
-
-void 
-glp_print_fps() {
-	static int count = 0;
-	if (++count == S.fps_game) {
-		printf("\r[fps %d]    ", glp_loop_get_fps());
-		count = 0;
-	}
+float 
+glp_get_dt() {
+	return S.tpf_real;
 }
 
 uint32_t 
