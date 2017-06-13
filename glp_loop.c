@@ -86,5 +86,5 @@ glp_get_dt() {
 
 uint32_t 
 glp_get_time() {
-	return glp_clock_get_time(S.clk);
+	return S.clk ? glp_clock_get_time(S.clk) : 0;
 }
