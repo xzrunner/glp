@@ -65,11 +65,11 @@ glp_loop_update() {
 		return;
 	}
 
-	S.tpf_real = _fix_during(glp_clock_get_during(S.clk, false));
+	S.tpf_real = (float)_fix_during(glp_clock_get_during(S.clk, false));
 	
 	if (S.sleep_time > 0) {
 #ifdef _WIN32
-		Sleep(S.sleep_time);
+		Sleep((DWORD)S.sleep_time);
 #else
 		usleep(1000 * S.sleep_time);
 #endif
