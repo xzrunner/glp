@@ -5,7 +5,7 @@
 
 #ifdef _WIN32
 	#include <windows.h>
-	#include <GL/gl.h>
+	#include <gl/glew.h>
 #else
 	#include <unistd.h>
 #endif
@@ -25,14 +25,17 @@ static struct loop_state S;
 void close_vsync() {
 	typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALPROC)(int);
 	PFNWGLSWAPINTERVALPROC wglSwapIntervalEXT = 0;
-	const char* extensions = (char*)glGetString(GL_EXTENSIONS);
-	if (strstr(extensions, "WGL_EXT_swap_control") == 0) {
-		return;
-	} else {
-		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALPROC)wglGetProcAddress("wglSwapIntervalEXT");
-		if(wglSwapIntervalEXT) {
-			wglSwapIntervalEXT(0);
+
+	GLint n;
+	glGetIntegerv(GL_NUM_EXTENSIONS, &n);
+	for (GLint i = 0; i < n; ++i) {
+		if (strcmp((const char*)(glGetStringi(GL_EXTENSIONS, i)), "WGL_EXT_swap_control") == 0) {
+			return;
 		}
+	}
+	wglSwapIntervalEXT = (PFNWGLSWAPINTERVALPROC)wglGetProcAddress("wglSwapIntervalEXT");
+	if (wglSwapIntervalEXT) {
+		wglSwapIntervalEXT(0);
 	}
 }
 #else
