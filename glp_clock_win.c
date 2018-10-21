@@ -10,7 +10,7 @@ struct glp_clock {
 static const int64_t ONE_THOUSAND = 1000;
 static const int64_t ONE_MILLION = 1000 * 1000;
 
-struct glp_clock* 
+struct glp_clock*
 glp_clock_create() {
 	struct glp_clock* clk = (struct glp_clock*)malloc(sizeof(*clk));
 	memset(clk, 0, sizeof(*clk));
@@ -18,18 +18,18 @@ glp_clock_create() {
 	return clk;
 }
 
-void 
+void
 glp_clock_release(struct glp_clock* clk) {
 	free(clk);
 }
 
-void 
+void
 glp_clock_start(struct glp_clock* clk) {
 	QueryPerformanceCounter(&clk->start);
 	clk->last = clk->start;
 }
 
-uint32_t 
+uint32_t
 glp_clock_get_time(struct glp_clock* clk) {
 	LARGE_INTEGER tmp;
 	QueryPerformanceCounter(&tmp);
@@ -37,7 +37,7 @@ glp_clock_get_time(struct glp_clock* clk) {
 	return time;
 }
 
-uint32_t 
+uint32_t
 glp_clock_get_during(struct glp_clock* clk, bool reset) {
 	LARGE_INTEGER tmp;
 	QueryPerformanceCounter(&tmp);

@@ -42,7 +42,7 @@ void close_vsync() {
 void close_vsync() {}
 #endif // _WIN32
 
-void 
+void
 glp_loop_init(int fps) {
 	close_vsync();
 
@@ -62,14 +62,14 @@ _fix_during(uint32_t during) {
 	return milliseconds > 1000 ? 30 : milliseconds;
 }
 
-void 
+void
 glp_loop_update() {
 	if (!S.clk) {
 		return;
 	}
 
 	S.tpf_real = (float)_fix_during(glp_clock_get_during(S.clk, false));
-	
+
 	if (S.sleep_time > 0) {
 #ifdef _WIN32
 		Sleep((DWORD)S.sleep_time);
@@ -82,12 +82,12 @@ glp_loop_update() {
 	S.sleep_time += (S.tpf_game - cost);
 }
 
-float 
+float
 glp_get_dt() {
 	return S.tpf_real;
 }
 
-uint32_t 
+uint32_t
 glp_get_time() {
 	return S.clk ? glp_clock_get_time(S.clk) : 0;
 }
