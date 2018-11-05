@@ -56,9 +56,9 @@ glp_loop_init(int fps) {
 	S.tpf_real = 0;
 }
 
-static uint32_t
+static float
 _fix_during(uint32_t during) {
-	uint32_t milliseconds = (uint32_t)(during / 1000);
+	float milliseconds = (float)(during / 1000.0f);
 	return milliseconds > 1000 ? 30 : milliseconds;
 }
 
@@ -68,7 +68,7 @@ glp_loop_update() {
 		return;
 	}
 
-	S.tpf_real = (float)_fix_during(glp_clock_get_during(S.clk, false));
+	S.tpf_real = _fix_during(glp_clock_get_during(S.clk, false));
 
 	if (S.sleep_time > 0) {
 #ifdef _WIN32
@@ -78,7 +78,7 @@ glp_loop_update() {
 #endif
 	}
 
-	uint32_t cost = _fix_during(glp_clock_get_during(S.clk, true));
+	float cost = _fix_during(glp_clock_get_during(S.clk, true));
 	S.sleep_time += (S.tpf_game - cost);
 }
 
